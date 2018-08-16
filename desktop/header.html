@@ -1,0 +1,46 @@
+<script type="text/discourse-plugin" version="0.8"> 
+  const container = Discourse.__container__;     
+  const { h } = require('virtual-dom');
+ 
+  api.createWidget('category-sidebar', { 
+      tagName: 'span',
+    
+      html(attrs, state) {
+          
+      const path = window.location.pathname;
+      let category;
+      const controller = container.lookup('controller:navigation/category');
+      category = controller.get("category");
+
+      if((/^\/c\//.test(path)) && (category.name == settings.category_name)) {
+          $(".topic-list").addClass("with-sidebar"); 
+
+          return h('div#category-title-header' + '.' + category.slug, {
+          }, h('div.category-title-contents', [
+          h('h2', "Hello world!"),   
+                  h('p', "Welcome to the sidebar"),  
+                  h('ul', [
+                  h('li', "Option 1" ),
+                  h('li', "Option 2" ),
+                  h('li', "Option 3" ),
+                  h('li', "Option 4" ),   
+                  ]),  
+              ]),
+          );   
+          } else {
+              $(".topic-list").removeClass("with-sidebar");
+          }
+          
+      }      
+  }),
+  api.decorateWidget('category-sidebar:after', helper => {
+      helper.widget.appEvents.on('page:changed', () => {
+          helper.widget.scheduleRerender(); 
+      });            
+  });
+</script> 
+
+
+<script type='text/x-handlebars' data-template-name='/connectors/before-topic-list-body/category-sidebar'>
+  {{mount-widget widget="category-sidebar"}}
+</script>

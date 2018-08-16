@@ -1,0 +1,77 @@
+@import "common/foundation/variables";
+
+.topic-list.with-sidebar {
+  >div {
+    display: none;
+  }
+}
+
+@media screen and (min-width: 767px) {
+  .topic-list.with-sidebar {
+    display: grid;
+    grid-column-gap: 1.5em;
+    align-items: start;
+    grid-template-rows: 50px auto;
+    grid-template-columns: 9fr 3fr; // 12 column grid
+    grid-template-areas: 
+    "head sidebar"
+    "body sidebar";
+
+    thead {
+      grid-area: head;
+      display: table;
+      align-self: end;
+    }
+    >div {
+      display: block;
+      margin-top: 15px;
+      grid-area: sidebar;
+      order: 3;
+      background: $tertiary-low;
+      padding: 0 1.25em .5em;
+      position: sticky;
+      top: 100px;
+    }
+    tbody {
+      grid-area: body;
+      display: table;
+
+    } 
+  }
+}
+
+// IE11 support, feel free to toss this into the sea
+
+@media screen and (min-width: 767px) {
+  .topic-list.with-sidebar {
+    display: -ms-grid;
+    -ms-grid-columns: 9fr 3fr;
+    -ms-grid-rows: 50px auto;
+    thead {
+      -ms-grid-row: 1;
+      -ms-grid-column: 1;
+      width: 100%; 
+      tr {
+        border-bottom: none;
+      }
+    }
+    >div {
+      -ms-grid-row: 1;
+      -ms-grid-column: 2;
+      -ms-grid-row-span: 2;
+      
+    }
+    tbody {
+      -ms-grid-row: 2;
+      -ms-grid-column: 1;
+      
+    } 
+  }
+}
+
+
+
+
+
+
+

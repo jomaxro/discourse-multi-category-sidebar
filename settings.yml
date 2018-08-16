@@ -1,0 +1,4 @@
+category_name:
+  type: string
+  default: howto
+  description: Show sidebar for this category
