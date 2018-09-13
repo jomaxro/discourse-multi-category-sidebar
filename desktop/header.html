@@ -19,7 +19,7 @@
                 
                 return h('div#category-title-header' + '.' + category.slug, {
                 }, h('div.category-title-contents', [
-                h('h2.sidebar-headline', settings.headline),   
+                h('h2#sidebar-headline', settings.headline),   
                 h('p.sidebar-intro', settings.intro),  
                 h('ul', [
                 links.split("|").map(i => {
