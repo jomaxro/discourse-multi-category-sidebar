@@ -2,8 +2,5 @@
   "name": "discourse-category-sidebar",
   "about_url": "URL",
   "license_url": "URL",
-  "assets": {
-  },
-  "color_schemes": {
-  }
+  "component": true
 }
