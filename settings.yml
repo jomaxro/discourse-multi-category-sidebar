@@ -1,4 +1,26 @@
+
 category_name:
   type: string
-  default: howto
+  default: Staff
   description: Show sidebar for this category
+
+sidebar_alignment:
+  default: right
+  type: enum
+  choices:
+    - left
+    - right
+
+headline: 
+  type: string
+  default: "Sidebar"
+
+intro: 
+  type: string
+  default: "Welcome to the sidebar"
+
+links: 
+  type: list
+  default: 
+    "header, this is a header|link, this is a link, https://example.com"
+  description: You can add lists of links with section headers here. To create a header format your option as "header, header text" to add a link use "link, link text, https://example.com"
