@@ -22,5 +22,5 @@ intro:
 links: 
   type: list
   default: 
-    "header, this is a header|link, this is a link, https://example.com"
-  description: You can add lists of links with section headers here. To create a header format your option as "header, header text" to add a link use "link, link text, https://example.com"
+    "header, this is a header|link, this is a link, https://example.com|text, this is text"
+  description: You can add lists of links with section headers here. To create a header format your option as "header, header text" to add a link use "link, link text, https://example.com" to add a text list item use "text, your text here"
