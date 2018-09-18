@@ -2,7 +2,7 @@
 category_name:
   type: string
   default: Staff
-  description: Show sidebar for this category
+  description: Show sidebar for this category (case-sensitive)
 
 sidebar_alignment:
   default: right
@@ -14,13 +14,15 @@ sidebar_alignment:
 headline: 
   type: string
   default: "Sidebar"
+  description: Optional. Leave blank for none. 
 
 intro: 
   type: string
   default: "Welcome to the sidebar"
+  description: Optional. Leave blank for none. 
 
-links: 
+list_items: 
   type: list
   default: 
-    "header, this is a header|link, this is a link, https://example.com|text, this is text"
-  description: You can add lists of links with section headers here. To create a header format your option as "header, header text" to add a link use "link, link text, https://example.com" to add a text list item use "text, your text here"
+    "subhead, your subhead text|link, your link text, https://example.com|text, your text here"
+  description: You can add lists with section headers above. <ul><li><b>Subheads:</b> format your option as "subhead, subhead text"</li><li><b>Links:</b> use "link, your link text, https://example.com"</li><li><b>Text:</b> format as "text, your text here"</ul>
