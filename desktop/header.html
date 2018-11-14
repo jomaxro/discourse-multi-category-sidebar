@@ -1,79 +1,76 @@
-<script type="text/discourse-plugin" version="0.8"> 
-    const container = Discourse.__container__;     
-    const { h } = require('virtual-dom');
-    
-    api.createWidget('category-sidebar', { 
-        tagName: 'span',
-        
-        html(attrs, state) {
-            
-            const path = window.location.pathname;
-            let category;
-            const controller = container.lookup('controller:navigation/category');
-            category = controller.get("category");
-            
-            if((/^\/c\//.test(path)) && (category.name == settings.category_name)) {
-                $(".topic-list").addClass("with-sidebar"); 
-                
-                var listItems = settings.list_items;
-                
-                return h('div#category-title-header' + '.' + category.slug, {
-                }, h('div.category-title-contents', [
-                h('h2#sidebar-headline', settings.headline),   
-                h('p.sidebar-intro', settings.intro),  
-                h('ul', [
-                listItems.split("|").map(i => {
-                    var seg = $.map(i.split(","), $.trim),
-                    type = seg[0],
-                    content = seg[1],
-                    href = seg[2];
-                    
-                    if (type == "link") {
-                        return h('li', [
-                        h(
-                        "a",
-                        {
-                            href: href,
-                            title: content},
-                            content
-                            )
-                            ])
-                        } else if (type == "text") {
-                            return h('li', content)
-                        
-                        } else if (type == "subhead") {
-                            return h('p', content)
-                        } 
-                    }),  
-                    ]),  
-                    ]),
-                    );  
-                    
-                } else {
-                    $(".topic-list").removeClass("with-sidebar");
-                }
-                
-            }      
-        }),
-        api.decorateWidget('category-sidebar:after', helper => {
-            helper.widget.appEvents.on('page:changed', () => {
-                helper.widget.scheduleRerender(); 
-            });            
+<script type="text/discourse-plugin" version="0.8">
+  function defaultSettings() {
+    return {
+      sidebar: "right",
+      style: ""
+    };
+  }
+
+  function parseSetups(raw) {
+    const parsed = {};
+
+    raw.split("|").forEach(setting => {
+      const [category, command, value] = setting.split(",").map(s => s.trim());
+
+      parsed[category] = parsed[category] || defaultSettings();
+      parsed[category][command] = value;
+    });
+
+    return parsed;
+  }
+
+  const setups = parseSetups(settings.setup);
+  const container = Discourse.__container__;
+  const { h } = require("virtual-dom");
+  const { ajax } = require("discourse/lib/ajax");
+  const postCache = {};
+
+  api.createWidget("category-sidebar", {
+    tagName: "span",
+
+    html() {
+      const path = window.location.pathname;
+      const controller = container.lookup("controller:navigation/category");
+      const category = controller.get("category");
+
+      if (/^\/c\//.test(path) && setups[category.name]) {
+        const setup = setups[category.name];
+
+        $(".topic-list")
+          .addClass("with-sidebar")
+          .addClass(setup["sidebar"]);
+
+        const nodes = [
+          h("h2#sidebar-headline", setup["headline"]),
+          h("p.sidebar-intro", setup["intro"]),
+          h("div", {
+            innerHTML: this.getPost(setup["post"]),
+            className: setup["style"]
+          })
+        ];
+
+        return h(
+          `div#category-title-header.${category.slug}`,
+          h("div.category-title-contents", nodes)
+        );
+      } else {
+        $(".topic-list").removeClass("with-sidebar");
+      }
+    },
+
+    getPost(id) {
+      if (!postCache[id]) {
+        ajax(`/posts/${id}.json`).then(response => {
+          postCache[id] = response.cooked;
+          this.scheduleRerender();
         });
-    </script> 
-    
-    
-    <script type='text/x-handlebars' data-template-name='/connectors/before-topic-list-body/category-sidebar'>
-       <div class="category-sidebar"> {{mount-widget widget="category-sidebar"}} </div>
-    </script>
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+      }
+
+      return postCache[id];
+    }
+  });
+</script>
+
+<script type='text/x-handlebars' data-template-name='/connectors/before-topic-list-body/category-sidebar'>
+   <div class="category-sidebar"> {{mount-widget widget="category-sidebar"}} </div>
+</script>
