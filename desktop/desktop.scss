@@ -14,12 +14,13 @@
     grid-template-rows: 50px auto;
     grid-template-columns: 9fr 3fr; // 12 column grid
 
-    @if $sidebar_alignment == "left" {
+    &.left {
       grid-template-columns: 3fr 9fr; // 12 column grid
       grid-template-areas:
         "sidebar head"
         "sidebar body";
-    } @else {
+    }
+    &.right {
       grid-template-columns: 9fr 3fr; // 12 column grid
       grid-template-areas:
         "head sidebar"
@@ -46,14 +47,9 @@
       p.siderbar-intro {
         margin-top: 0.25em;
       }
-      ul {
-        margin: 0;
-        p {
-          margin: 0.5em 0 0.25em 0;
-          font-weight: bold;
-        }
-        li {
-          margin-left: 1.5em;
+      .no-bullets {
+        ul, ol {
+          list-style: none;
         }
       }
     }

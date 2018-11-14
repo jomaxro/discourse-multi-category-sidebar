@@ -1,28 +1,27 @@
-
-category_name:
-  type: string
-  default: Staff
-  description: Show sidebar for this category (case-sensitive)
-
-sidebar_alignment:
-  default: right
-  type: enum
-  choices:
-    - left
-    - right
-
-headline: 
-  type: string
-  default: "Sidebar"
-  description: Optional. Leave blank for none. 
-
-intro: 
-  type: string
-  default: "Welcome to the sidebar"
-  description: Optional. Leave blank for none. 
-
-list_items: 
+setup:
   type: list
-  default: 
-    "subhead, your subhead text|link, your link text, https://example.com|text, your text here"
-  description: You can add lists with section headers above. <ul><li><b>Subheads:</b> format your option as "subhead, subhead text"</li><li><b>Links:</b> use "link, your link text, https://example.com"</li><li><b>Text:</b> format as "text, your text here"</ul>
+  default: ''
+  description: |
+    Each line should be in the format of "<code>category name</code>, <code>command</code>, <code>value</code>"
+
+    List of available commands and values:
+    <ul>
+      <li><code>sidebar</code>
+        <ul>
+          <li>Allowed value: one of <code>left</code>, <code>right</code></li>
+          <li>Default: <code>right</code></li>
+        </ul>
+      </li>
+      <li><code>style</code>:
+        <ul>
+          <li>Allowed value: <code>no-bullets</code></li>
+          <li>Default: blank</li>
+        </ul>
+      </li>
+      <li><code>post</code>
+        <ul>
+          <li>Integer <code>post_id</code></li>
+          <li>this can be found by inspecting the HTML source of a post <code>data-post-id=xxxx</code></li>
+        </ul>
+      </li>
+    </ul>
