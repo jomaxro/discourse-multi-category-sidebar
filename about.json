@@ -1,6 +1,6 @@
 {
   "name": "discourse-multi-category-sidebar",
-  "about_url": "URL",
-  "license_url": "URL",
+  "about_url": "https://github.com/xrav3nz/discourse-multi-category-sidebar",
+  "license_url": "https://github.com/xrav3nz/discourse-multi-category-sidebar/blob/master/LICENSE",
   "component": true
 }
